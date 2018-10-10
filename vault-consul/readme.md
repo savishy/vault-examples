@@ -86,10 +86,56 @@ Active Node Address    <none>
 
 Now the dashboard in Consul would show 
 
-![image](https://user-images.githubusercontent.com/13379978/46719716-429eef00-cc8c-11e8-876e-877c65dead63.png)
+![image](https://user-images.githubusercontent.com/13379978/46720024-fc965b00-cc8c-11e8-9881-d7bc3b194dcd.png)
+
+### Storing a Secret: First Login
+
+```
+vagrant@ubuntu:~/work/vault-examples/vault-consul$ docker exec -it vault-consul_vault_1 vault login
+Token (will be hidden):
+Success! You are now authenticated. The token information displayed below
+is already stored in the token helper. You do NOT need to run "vault login"
+again. Future Vault requests will automatically use this token.
+
+Key                  Value
+---                  -----
+token                86s6txkXP4agSf3DiCsmBEOZ
+token_accessor       6LMELnorK8LmnmCkxRgeseYu
+token_duration       
+token_renewable      false
+token_policies       ["root"]
+identity_policies    []
+policies             ["root"]
+```
+
+Provide the root token to log in.
 
 
+### Store a sample secret
 
+```
+docker exec -it vault-consul_vault_1 vault write -address=http://127.0.0.1:8200 secret/awskey value=AKIABUHAHAHAHA
+Success! Data written to: secret/awskey
+docker exec -it vault-consul_vault_1 vault write -address=http://127.0.0.1:8200 secret/awssecret value=AKIABUHAHAHAHAREALLYINSECURE
+Success! Data written to: secret/awssecret
+```
+
+### View Secrets in Consul
+
+The secrets seem to be stored under `vault/logical/<UUID>`. 
+
+![image](https://user-images.githubusercontent.com/13379978/46720288-c0afc580-cc8d-11e8-9eef-66ea76259761.png)
+
+### View Secrets from Vault CLI
+
+
+```
+docker exec -it vault-consul_vault_1 vault read secret/awssecret
+Key                 Value
+---                 -----
+refresh_interval    768h
+value               AKIABUHAHAHAHAREALLYINSECURE
+```
 
 ## Notes
 
