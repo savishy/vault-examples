@@ -153,3 +153,4 @@ value               AKIABUHAHAHAHAREALLYINSECURE
 1. [`wait-for.sh` for sh](https://github.com/Eficode/wait-for)
 1. [Consul Secrets Engine for Vault](https://www.vaultproject.io/docs/secrets/consul/)
 1. [Consul Agent options](https://www.consul.io/docs/agent/options.html)
+1. [this example](https://github.com/tolitius/cault) of Vault + Consul, which was pretty outdated. 
