@@ -1,0 +1,16 @@
+version: "3"
+services:
+  mydevvault:
+    image: vault:0.11.3
+    hostname: vault
+    network_mode: host
+    volumes:
+    - ./init.sh:/init.sh
+    - ./wait-for:/wait-for
+    container_name: mydevvault
+    ports:
+    - 8200:8200
+    environment:
+      VAULT_ADDR: http://127.0.0.1:8200
+    entrypoint: /init.sh
+      
